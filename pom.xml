@@ -41,6 +41,7 @@
         <lombok.version>1.16.10</lombok.version>
         <mysql.version>6.0.6</mysql.version>
         <datasource.version>1.0-SNAPSHOT</datasource.version>
+        <jwt.version>0.7.0</jwt.version>
         <auth.version>1.0-SNAPSHOT</auth.version>
         <book.version>1.0-SNAPSHOT</book.version>
         <common.version>1.0-SNAPSHOT</common.version>
@@ -91,6 +92,11 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.biubiu</groupId>
