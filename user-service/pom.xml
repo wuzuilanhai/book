@@ -33,6 +33,10 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
@@ -40,6 +44,10 @@
         <dependency>
             <groupId>com.biubiu</groupId>
             <artifactId>common-lib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.biubiu</groupId>
+            <artifactId>user-api</artifactId>
         </dependency>
     </dependencies>
 

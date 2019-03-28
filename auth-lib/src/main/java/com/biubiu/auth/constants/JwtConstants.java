@@ -17,4 +17,6 @@ public interface JwtConstants {
 
     String AUTH_HEADER = "Authorization";
 
+    String SPLIT = ",";
+
 }

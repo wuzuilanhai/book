@@ -1,12 +1,8 @@
 package com.biubiu.auth.util;
 
 import com.biubiu.auth.constants.JwtConstants;
-import com.biubiu.auth.exception.AuthException;
 import com.biubiu.auth.properties.JwtProperties;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
 import javax.annotation.Resource;
 import javax.crypto.spec.SecretKeySpec;
@@ -72,7 +68,6 @@ public class JwtUtil {
      * @return 用户相关信息
      */
     public Claims parseJwt(String jwt) {
-        if (!verifyJwt(jwt)) throw new AuthException("expired jwt");
         return Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(jwtProperties.getSecret()))
                 .parseClaimsJws(jwt)
@@ -87,27 +82,29 @@ public class JwtUtil {
      */
     public boolean verifyJwt(String jwt) {
         Date now = new Date();
-        Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(jwtProperties.getSecret()))
-                .parseClaimsJws(jwt)
-                .getBody();
-        Date expiration = claims.getExpiration();
-        boolean result = now.after(expiration);
-        if (result) refreshJwt(now, expiration, claims);
-        return result;
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(jwtProperties.getSecret()))
+                    .parseClaimsJws(jwt)
+                    .getBody();
+            refreshJwt(now, claims);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * 刷新jwt
      *
-     * @param now        当前时间
-     * @param expiration 过期时间
-     * @param claims     claims
+     * @param now    当前时间
+     * @param claims claims
      */
-    private void refreshJwt(Date now, Date expiration, Claims claims) {
-        //是否在过期后的有效期间内,在则续租新的jwt,否则不续租
+    private void refreshJwt(Date now, Claims claims) {
+        //是否在过期前的有效刷新期间内,在则续租新的jwt,否则不续租
+        Date expiration = claims.getExpiration();
         long survival = jwtProperties.getSurvival();
-        Date calcDate = new Date(expiration.getTime() + survival);
+        Date calcDate = new Date(expiration.getTime() - survival);
         if (calcDate.before(now)) {
             //续租
             String userId = (String) claims.get(JwtConstants.USER_ID);

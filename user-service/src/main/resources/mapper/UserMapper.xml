@@ -7,7 +7,7 @@
     <select id="selectUser" parameterType="java.lang.String" resultType="com.biubiu.user.po.User">
         select u.* from t_user u
         where u.username = #{username}
-              and u.is_delete = 0
+        and u.is_delete = 0
     </select>
 
     <select id="uniqueName" parameterType="java.lang.String" resultType="java.lang.Integer">
