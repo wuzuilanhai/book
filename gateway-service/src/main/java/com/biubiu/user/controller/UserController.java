@@ -40,7 +40,7 @@ public class UserController {
     public Response user(@RequestBody @Valid UserRegisterRequest request) {
         UserRegisterDto userRegisterDto = ModelMapperUtil.convert(request, UserRegisterDto.class);
         UserRegisterRespDto userRegisterRespDto = userService.user(userRegisterDto);
-        return Response.succeed(userRegisterDto);
+        return Response.succeed(userRegisterRespDto);
     }
 
     /**
