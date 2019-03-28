@@ -10,11 +10,14 @@
         (
         select rp.permission_id from t_role_permission rp
         <where>
-            <if test="list != null">
+            <if test="list != null and list.size() > 0">
                 rp.role_id in
                 <foreach collection="list" item="rid" index="index" open="(" close=")" separator=",">
                     #{rid}
                 </foreach>
+            </if>
+            <if test="list == null or list.size() == 0">
+                1 != 1
             </if>
         </where>
         )
