@@ -4,13 +4,17 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * Created by Haibiao.Zhang on 2019-03-28 10:45
  */
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Response<T> {
+public class Response<T> implements Serializable {
+
+    private static final long serialVersionUID = 3683560174028475510L;
 
     /**
      * 请求成功
@@ -36,6 +40,11 @@ public class Response<T> {
      * 请求失败（服务端因素）
      */
     public static final Long FORBIDDEN = 403L;
+
+    /**
+     * 服务错误（服务端因素）
+     */
+    public static final Long INTERNAL_ERROR = 500L;
 
     private Long code;
 

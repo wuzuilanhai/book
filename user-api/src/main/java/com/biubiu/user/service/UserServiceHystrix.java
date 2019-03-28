@@ -4,6 +4,7 @@ import com.biubiu.user.dto.UserLoginDto;
 import com.biubiu.user.dto.UserLoginRespDto;
 import com.biubiu.user.dto.UserRegisterDto;
 import com.biubiu.user.dto.UserRegisterRespDto;
+import com.biubiu.web.Response;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,18 +14,22 @@ import org.springframework.stereotype.Component;
 public class UserServiceHystrix implements UserService {
 
     @Override
-    public UserRegisterRespDto user(UserRegisterDto userRegisterDto) {
-        return null;
+    public Response<UserRegisterRespDto> user(UserRegisterDto userRegisterDto) {
+        return doErrorResponse(Response.INTERNAL_ERROR, "user service not available when execute method [findAllUsers]");
     }
 
     @Override
-    public UserLoginRespDto login(UserLoginDto request) {
-        return null;
+    public Response<UserLoginRespDto> login(UserLoginDto request) {
+        return doErrorResponse(Response.INTERNAL_ERROR, "user service not available when execute method [findAllUsers]");
     }
 
     @Override
-    public Object findAllUsers() {
-        return "user service not available when execute method [findAllUsers]";
+    public Response<Object> findAllUsers() {
+        return doErrorResponse(Response.INTERNAL_ERROR, "user service not available when execute method [findAllUsers]");
+    }
+
+    private Response doErrorResponse(Long code, String message) {
+        return Response.fail(code, message);
     }
 
 }

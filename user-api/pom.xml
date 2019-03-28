@@ -20,6 +20,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.biubiu</groupId>
+            <artifactId>common-lib</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -9,7 +9,6 @@ import com.biubiu.auth.util.JwtUtil;
 import com.biubiu.user.dto.UserLoginDto;
 import com.biubiu.user.dto.UserLoginRespDto;
 import com.biubiu.user.dto.UserRegisterDto;
-import com.biubiu.user.dto.UserRegisterRespDto;
 import com.biubiu.user.request.UserLoginRequest;
 import com.biubiu.user.request.UserRegisterRequest;
 import com.biubiu.user.service.UserService;
@@ -39,8 +38,7 @@ public class UserController {
     @PostMapping("/user")
     public Response user(@RequestBody @Valid UserRegisterRequest request) {
         UserRegisterDto userRegisterDto = ModelMapperUtil.convert(request, UserRegisterDto.class);
-        UserRegisterRespDto userRegisterRespDto = userService.user(userRegisterDto);
-        return Response.succeed(userRegisterRespDto);
+        return userService.user(userRegisterDto);
     }
 
     /**
@@ -49,17 +47,13 @@ public class UserController {
     @PostMapping("/user/login")
     public Response login(@RequestBody @Valid UserLoginRequest request) {
         UserLoginDto userLoginDto = ModelMapperUtil.convert(request, UserLoginDto.class);
-        UserLoginRespDto respDto = null;
-        try {
-            respDto = userService.login(userLoginDto);
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
+        Response<UserLoginRespDto> response = userService.login(userLoginDto);
+        UserLoginRespDto respDto = response.getPayload();
         if (respDto != null) {
             String jwt = jwtUtil.createJwt(respDto.getUserId(), respDto.getUsername(), respDto.getRoles(), respDto.getPermissions());
             HttpUtil.getResponse().setHeader(JwtConstants.AUTH_HEADER, jwt);
         }
-        return Response.succeed(respDto);
+        return response;
     }
 
     @GetMapping("/users")
@@ -67,7 +61,7 @@ public class UserController {
     @Role(roles = {"role0"})
     @Permission(permissions = {"permission0"})
     public Response users() {
-        return Response.succeed(userService.findAllUsers());
+        return userService.findAllUsers();
     }
 
 }

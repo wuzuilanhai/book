@@ -11,6 +11,7 @@ import com.biubiu.user.mapper.UserMapper;
 import com.biubiu.user.po.Permission;
 import com.biubiu.user.po.Role;
 import com.biubiu.user.po.User;
+import com.biubiu.web.Response;
 import com.google.common.base.Joiner;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.util.ByteSource;
@@ -42,7 +43,7 @@ public class UserServiceImpl {
      */
     @PostMapping("/user")
     @Transactional
-    public UserRegisterRespDto user(@RequestBody UserRegisterDto userRegisterDto) {
+    public Response<UserRegisterRespDto> user(@RequestBody UserRegisterDto userRegisterDto) {
         String username = userRegisterDto.getUsername();
         if (userMapper.uniqueName(username) > 0) {
             throw new UserException("用户名已存在");
@@ -58,17 +59,17 @@ public class UserServiceImpl {
                 .editor(username)
                 .build();
         if (userMapper.insertSelective(newUser) == 0) throw new UserException("user register fail");
-        return UserRegisterRespDto.builder()
+        return Response.succeed(UserRegisterRespDto.builder()
                 .userId(newUser.getId())
                 .username(username)
-                .build();
+                .build());
     }
 
     /**
      * 用户登陆
      */
     @PostMapping("/user/login")
-    public UserLoginRespDto login(@RequestBody UserLoginDto userLoginDto) {
+    public Response<UserLoginRespDto> login(@RequestBody UserLoginDto userLoginDto) {
         String username = userLoginDto.getUsername();
         User user = userMapper.selectUser(username);
         if (user == null) {
@@ -84,12 +85,12 @@ public class UserServiceImpl {
         List<String> roleNames = roles.stream().map(Role::getName).collect(Collectors.toList());
         List<Permission> permissions = permissionMapper.findByRids(roles.stream().map(Role::getId).collect(Collectors.toList()));
         List<String> permissionNames = permissions.stream().map(Permission::getPermission).collect(Collectors.toList());
-        return UserLoginRespDto.builder()
+        return Response.succeed(UserLoginRespDto.builder()
                 .userId(user.getId())
                 .username(username)
                 .roles(Joiner.on(",").join(roleNames))
                 .permissions(Joiner.on(",").join(permissionNames))
-                .build();
+                .build());
     }
 
     /**
@@ -97,8 +98,8 @@ public class UserServiceImpl {
      */
 
     @GetMapping("/users")
-    public Object users() {
-        return userMapper.selectAll();
+    public Response<Object> users() {
+        return Response.succeed(userMapper.selectAll());
     }
 
 }

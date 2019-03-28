@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -13,7 +14,9 @@ import java.util.Collection;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class PagedResponse<T extends Collection> extends Response<T> {
+public class PagedResponse<T extends Collection> extends Response<T> implements Serializable {
+
+    private static final long serialVersionUID = 5255934074505445311L;
 
     private Integer pageIndex;
 
