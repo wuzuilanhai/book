@@ -5,7 +5,6 @@ import com.biubiu.auth.constants.JwtConstants;
 import com.biubiu.auth.exception.AuthenticationException;
 import com.biubiu.auth.util.HttpUtil;
 import com.biubiu.util.RedisUtil;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
