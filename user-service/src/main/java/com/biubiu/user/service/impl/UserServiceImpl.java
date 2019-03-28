@@ -1,10 +1,10 @@
 package com.biubiu.user.service.impl;
 
+import com.biubiu.exception.UserException;
 import com.biubiu.user.dto.UserLoginDto;
 import com.biubiu.user.dto.UserLoginRespDto;
 import com.biubiu.user.dto.UserRegisterDto;
 import com.biubiu.user.dto.UserRegisterRespDto;
-import com.biubiu.user.exception.UserException;
 import com.biubiu.user.mapper.PermissionMapper;
 import com.biubiu.user.mapper.RoleMapper;
 import com.biubiu.user.mapper.UserMapper;

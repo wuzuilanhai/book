@@ -1,27 +1,27 @@
-package com.biubiu.user.exception;
+package com.biubiu.exception;
 
 /**
  * Created by Haibiao.Zhang on 2019-03-27 13:55
  */
-public class UserException extends RuntimeException {
+public class BookException extends RuntimeException {
 
-    public UserException() {
+    public BookException() {
         super();
     }
 
-    public UserException(String message) {
+    public BookException(String message) {
         super(message);
     }
 
-    public UserException(String message, Throwable cause) {
+    public BookException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public UserException(Throwable cause) {
+    public BookException(Throwable cause) {
         super(cause);
     }
 
-    protected UserException(String message, Throwable cause,
+    protected BookException(String message, Throwable cause,
                             boolean enableSuppression,
                             boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);

@@ -1,4 +1,4 @@
-package com.biubiu.present.exception;
+package com.biubiu.exception;
 
 /**
  * Created by Haibiao.Zhang on 2019-03-27 13:55

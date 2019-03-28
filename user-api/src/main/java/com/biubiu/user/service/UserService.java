@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * Created by Haibiao.Zhang on 2019-03-27 13:29
  */
-@FeignClient(value = "user-service", path = "/rest", fallback = UserServiceHystrix.class)
+@FeignClient(value = "user-service", path = "/rest")
 public interface UserService {
 
     @PostMapping("/user")
