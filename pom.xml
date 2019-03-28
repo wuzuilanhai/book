@@ -18,6 +18,7 @@
         <module>gateway-service</module>
         <module>present-api</module>
         <module>present-service</module>
+        <module>redis-lib</module>
         <module>user-api</module>
         <module>user-service</module>
     </modules>
@@ -48,6 +49,7 @@
         <book.version>1.0-SNAPSHOT</book.version>
         <common.version>1.0-SNAPSHOT</common.version>
         <present.version>1.0-SNAPSHOT</present.version>
+        <redis.version>1.0-SNAPSHOT</redis.version>
         <user.version>1.0-SNAPSHOT</user.version>
     </properties>
 
@@ -135,6 +137,11 @@
                 <groupId>com.biubiu</groupId>
                 <artifactId>present-api</artifactId>
                 <version>${present.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.biubiu</groupId>
+                <artifactId>redis-lib</artifactId>
+                <version>${redis.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.biubiu</groupId>

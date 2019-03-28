@@ -6,6 +6,7 @@ import io.jsonwebtoken.*;
 
 import javax.annotation.Resource;
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
@@ -102,15 +103,19 @@ public class JwtUtil {
         Date expiration = claims.getExpiration();
         long survival = jwtProperties.getSurvival();
         Date calcDate = new Date(expiration.getTime() - survival);
+        String userId = (String) claims.get(JwtConstants.USER_ID);
+        String username = (String) claims.get(JwtConstants.USER_NAME);
+        String roles = (String) claims.get(JwtConstants.USER_ROLES);
+        String permissions = (String) claims.get(JwtConstants.USER_PERMISSIONS);
+        String newJwt = createJwt(userId, username, roles, permissions);
         if (calcDate.before(now)) {
             //续租
-            String userId = (String) claims.get(JwtConstants.USER_ID);
-            String username = (String) claims.get(JwtConstants.USER_NAME);
-            String roles = (String) claims.get(JwtConstants.USER_ROLES);
-            String permissions = (String) claims.get(JwtConstants.USER_PERMISSIONS);
-            String newJwt = createJwt(userId, username, roles, permissions);
             HttpUtil.getResponse().setHeader(JwtConstants.AUTH_HEADER, newJwt);
         }
+        //设置当前登陆用户ID和名称
+        HttpServletRequest request = HttpUtil.getRequest();
+        request.setAttribute(JwtConstants.USER_ID, userId);
+        request.setAttribute(JwtConstants.USER_NAME, username);
     }
 
 }

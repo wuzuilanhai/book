@@ -31,7 +31,7 @@ public class ControllerAdvice {
 
     @ExceptionHandler(Throwable.class)
     public Response throwable(Throwable t) {
-        String errorMessage = t.getCause().getLocalizedMessage();
+        String errorMessage = t.getLocalizedMessage();
         String[] contents = errorMessage.split("; content:\n");
         if (contents.length > 1) {
             String content = contents[1];
