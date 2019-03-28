@@ -83,10 +83,7 @@ public class JwtUtil {
     public boolean verifyJwt(String jwt) {
         Date now = new Date();
         try {
-            Claims claims = Jwts.parser()
-                    .setSigningKey(DatatypeConverter.parseBase64Binary(jwtProperties.getSecret()))
-                    .parseClaimsJws(jwt)
-                    .getBody();
+            Claims claims = parseJwt(jwt);
             refreshJwt(now, claims);
         } catch (Exception e) {
             return false;
