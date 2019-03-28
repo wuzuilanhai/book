@@ -93,10 +93,6 @@ public class UserServiceImpl {
                 .build());
     }
 
-    /**
-     * 用户注销
-     */
-
     @GetMapping("/users")
     public Response<Object> users() {
         return Response.succeed(userMapper.selectAll());
