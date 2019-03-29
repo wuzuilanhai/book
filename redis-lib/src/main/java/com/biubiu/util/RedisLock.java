@@ -28,6 +28,10 @@ import java.util.concurrent.locks.LockSupport;
 @Component
 public class RedisLock {
 
+    private static final int PARK_MIllIS = 100;
+
+    private static final int MILLIS_TO_NANO = 1000000;
+
     private static final String NX = "NX";
 
     private static final String EX = "EX";
@@ -57,7 +61,7 @@ public class RedisLock {
             if (doTryLock(key, value, expire))
                 return RedisLockResult.builder().lock(true).key(key).value(value).build();
             //随机休眠一段时间
-            LockSupport.parkNanos(new Random().nextInt(50000));
+            LockSupport.parkNanos(new Random().nextInt(PARK_MIllIS) * MILLIS_TO_NANO);
         }
         return RedisLockResult.builder().lock(false).key(key).build();
     }
