@@ -6,6 +6,7 @@ import com.biubiu.auth.annotation.Role;
 import com.biubiu.auth.constants.JwtConstants;
 import com.biubiu.auth.util.HttpUtil;
 import com.biubiu.auth.util.JwtUtil;
+import com.biubiu.auth.util.UserUtil;
 import com.biubiu.user.dto.UserLoginDto;
 import com.biubiu.user.dto.UserLoginRespDto;
 import com.biubiu.user.dto.UserRegisterDto;
@@ -68,7 +69,7 @@ public class UserController {
     @PostMapping("/user/logout")
     @Login
     public Response logout() {
-        String userId = (String) HttpUtil.getRequest().getAttribute(JwtConstants.USER_ID);
+        String userId = UserUtil.currentUserId();
         redisUtil.del(userId);
         return Response.succeed();
     }
