@@ -13,6 +13,7 @@
         <module>auth-lib</module>
         <module>book-api</module>
         <module>book-service</module>
+        <module>chat-service</module>
         <module>common-lib</module>
         <module>eureka-service</module>
         <module>fastdfs-service</module>
